@@ -127,4 +127,4 @@ mmedit/.mim
 *.mar
 
 # results
-video_files/
+results/
