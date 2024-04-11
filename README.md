@@ -6,4 +6,12 @@ figma: https://www.figma.com/file/eDxVneOnBmgCOffsoOjSZ6/%E6%97%B6%E5%85%89%E8%A
 
 "demo.mp4"
 
+# Run
+```sh
+run bash.sh
+```
+
+# Home Page
+http://localhost:8000/videos/upload
+
 
