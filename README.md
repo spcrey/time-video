@@ -4,7 +4,8 @@ figma: https://www.figma.com/file/eDxVneOnBmgCOffsoOjSZ6/%E6%97%B6%E5%85%89%E8%A
 
 ## Web
 
-https://big-event-spcrey.oss-cn-beijing.aliyuncs.com/demo.mp4
+
+[![Alt text]](https://big-event-spcrey.oss-cn-beijing.aliyuncs.com/demo.mp4)
 
 
 
