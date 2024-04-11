@@ -4,5 +4,10 @@ figma: https://www.figma.com/file/eDxVneOnBmgCOffsoOjSZ6/%E6%97%B6%E5%85%89%E8%A
 
 ## Web
 
-./demo.mp4
+<video width="320" height="240" controls>
+  <source src="./demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
 
