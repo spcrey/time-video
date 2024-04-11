@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        {% load static %}
+		<style type="text/css"> 
+        
+		body {
+			zoom: 0.8;
+		}
+        #area_overall {
+			border: 0px solid #000000;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			width: 1920px;
+			height: 1080px;
+			background-image: url( {% static "videos/images/background.jpg" %} );
+		}
+        #area_menu_up {
+			position: absolute;
+			height: 132px;
+			width: 1776px;
+			left: 72px;
+			top: 72px;
+			border-radius: 12px;
+			background-color: #FFFFFF;
+		}
+        #area_menu_left {
+			position: absolute;
+			height: 720px;
+			width: 288px;
+			left: 72px;
+			top: 288px;
+			border-radius: 12px;
+			background-color: #FFFFFF;
+
+		}
+        #area_menu_center {
+			position: absolute;
+			height: 720px;
+			width: 1416px;
+			left: 432px;
+			top: 288px;
+			border-radius: 12px;
+			background-color: #FFFFFF;
+		}
+        #area_file {
+			border: 6px solid #A5A3AE;
+			position: absolute;
+			height: 432px;
+			width: 1344px;
+			left: 36px;
+			top: 36px;
+			border-radius: 12px;
+			background-color: #ECE9F6;
+		}
+        #area_gennerate {
+			position: absolute;
+			height: 72px;
+			width: 255px;
+			left: 1125px;
+			top: 504px;
+			border-radius: 12px;
+			background-color: #4A2BDB;
+		}
+        #area_uplaod {
+			position: absolute;
+			height: 90px;
+			width: 234px;
+			left: 27px;
+			top: 27px;
+			border-radius: 12px;
+			background-color: #4A2BDB;
+		}
+        #area_collection {
+			position: absolute;
+			height: 90px;
+			width: 234px;
+			left: 27px;
+			top: 135px;
+			border-radius: 12px;
+			background-color: #FFFFFF;
+		}
+        #area_history {
+			position: absolute;
+			height: 90px;
+			width: 234px;
+			left: 27px;
+			top: 243px;
+			border-radius: 12px;
+			background-color: #FFFFFF;
+		}
+        #area_playing {
+			position: absolute;
+			height: 90px;
+			width: 234px;
+			left: 27px;
+			top: 351px;
+			border-radius: 12px;
+			background-color: #FFFFFF;
+		}
+        #area_resolution {
+			position: absolute;
+			height: 72px;
+			width: 423px;
+			left: 36px;
+			top: 504px;
+			border-radius: 12px;
+			background-color: #ECE9F6;
+		}
+        #area_time {
+			position: absolute;
+			height: 72px;
+			width: 594px;
+			left: 495px;
+			top: 504px;
+			border-radius: 12px;
+			background-color: #ECE9F6;
+		}
+        #icon_upload {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 12px;
+			top: 12px;
+			background-image: url( {% static "videos/icons/icon_white_upload.png" %} );
+		}
+        #icon_collection {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 12px;
+			top: 12px;
+			background-image: url( {% static "videos/icons/icon_blue_collection.png" %} );
+		}
+        #icon_history {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 12px;
+			top: 12px;
+			background-image: url( {% static "videos/icons/icon_blue_history.png" %} );
+		}
+        #icon_playing {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 12px;
+			top: 12px;
+			background-image: url( {% static "videos/icons/icon_blue_playing.png" %} );
+		}
+        #icon_video {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 36px;
+			top: 36px;
+			background-image: url( {% static "videos/icons/icon_video.png" %} );
+		}
+        #icon_login {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 1668px;
+			top: 36px;
+			background-image: url( {% static "videos/icons/icon_login.png" %} );
+		}
+        #text_time_video {
+			position: absolute;
+			height: 72px;
+			width: 144px;
+			left: 126px;
+			top: 36px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #4A4343;
+		}
+        #text_login {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 1578px;
+			top: 36px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #4A4343;
+		}
+        #text_generate {
+			position: absolute;
+			height: 72px;
+			width: 80px;
+			left: 90px;
+			top: 0px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #FFFFFF;
+            border: 0px;
+            border-style: none;
+            background-color: #4A2BDB;
+		}
+        #text_upload {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 99px;
+			top: 9px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #FFFFFF;
+		}
+        #text_history {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 99px;
+			top: 9px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #4A4343;
+		}
+        #text_collection {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 99px;
+			top: 9px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #4A4343;
+		}
+        #text_playing {
+			position: absolute;
+			height: 72px;
+			width: 72px;
+			left: 99px;
+			top: 9px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #4A4343;
+		}
+        #text_file {
+			position: absolute;
+			top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+		}
+        #select_resolution {
+			position: absolute;
+			height: 72px;
+			width: 351px;
+			left: 27px;
+			top: 0px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #4A4343;
+		}
+        #select_time {
+			position: absolute;
+			height: 72px;
+			width: 351px;
+			left: 27px;
+			top: 0px;
+			font-size:36px;
+			text-align: center; 
+			line-height: 72px;
+			font-family:"Microsoft Yahei";
+			color: #4A4343;
+		}
+        .link_area_menu_left{ 
+            text-decoration: none;
+            color: #4A4343;
+        }
+		.custom-file-upload {
+			font-size: 36px;
+			display: inline-block;
+			padding: 12px 24px;
+			cursor: pointer;
+			background-color: #ed6b50;
+			border-radius: 5px;
+			color: #FFFFFF;
+		}
+		.custom-file-upload input[type=file] {
+			display: none;
+		}
+        </style>
+	</head>
+	<body>
+        <div id="area_overall">
+            <div id="area_menu_up">
+                <div id="icon_video"> </div>
+                <div id="text_time_video">
+                    时光视频
+                </div>
+                <div id="text_login">
+                    <a class="link_area_menu_left" href="{% url 'videos:user_login' %}">登录</a>
+                </div>
+                <div id="icon_login"> </div>
+            </div>
+            <div id="area_menu_left">
+                <div id="area_uplaod">
+                    <div id="icon_upload"></div>
+                    <div id="text_upload">
+                        上传
+                    </div>
+                </div>
+                <div id="area_collection">
+                    <div id="icon_collection"></div>
+                    <div id="text_collection">
+                        <a class="link_area_menu_left" href="{% url 'videos:collection' %}">收藏</a>
+                    </div>
+                </div>
+                <div id="area_history">
+                    <div id="icon_history"></div>
+                    <div id="text_history">
+                        <a class="link_area_menu_left" href="{% url 'videos:history' %}">历史</a>
+                    </div>
+                </div>
+                <div id="area_playing">
+                    <div id="icon_playing"></div>
+                    <div id="text_playing">
+                        <a class="link_area_menu_left" href="{% url 'videos:upload_process' %}">进度</a>
+                    </div>
+                </div>
+            </div>
+            <form method="post" enctype="multipart/form-data" id="area_menu_center">
+                <div id="area_file">
+                    {% csrf_token %}
+                    <div id="text_file">
+						<!-- <label label for="id_file" class="custom-file-upload" id="file-label"> -->
+							<!-- 上传视频 -->
+							{{ form.as_p }}
+						<!-- </label> -->
+                    </div>
+                </div>
+                <div id="area_resolution">
+                    <div id="select_resolution"> 
+                        <select style="font-size:36px; border: 0;  outline: none; background-color: #ECE9F6;">
+                            <option>分辨率：1920 * 1080</option>
+                            <option>分辨率：1366 * 768</option>
+                            <option>分辨率：1280 * 720</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="area_time">
+                    <div id="select_time"> 
+                        <select style="font-size:36px; border: 0;  outline: none; background-color: #ECE9F6;">
+					        <option>时间截取：无截取</option>
+					        <option>时间截取：00:00:00 - 00:01:00</option>
+					        <option>时间截取：00:00:00 - 00:00:10</option>
+				    	</select>
+                    </div>
+                </div>
+                <div id="area_gennerate">
+                    <input type="submit" value="生成" id="text_generate">
+                </div>
+            </form>
+        </div>
+		<script>	
+			const fileInput = document.getElementById("id_file");
+			const fileLabel = document.getElementById("file-label");
+		
+			fileInput.addEventListener("change", function() {
+				if (fileInput.files.length > 0) {
+					fileLabel.textContent = fileInput.files[0].name;
+				} else {
+					
+				}
+			});
+		</script>
+    </body>
+</html>

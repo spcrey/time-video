@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        {% load static %}
+		<style type="text/css"> 
+            body {
+                zoom: 0.8;
+            }
+            #area_overall {
+                border: 0px solid #000000;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width: 1920px;
+                height: 1080px;
+                background-image: url( {% static "videos/images/background.jpg" %} );
+            }
+            #area_login {
+                border: 0px solid #000000;
+                position: absolute;
+                left: 640px;
+                top: 360px;
+                width:640px;
+                height: 360px;
+                background-color: #FFFFFF;
+                border-radius: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="area_overall">
+            <div id="area_login">
+            <div style="font-size:36px; position: absolute;  top: 36px; left: 250px;"> 请登录 </div>
+            <form action="" method="post"  style="position: absolute;  top: 100px; left: 48px;;">
+                {% csrf_token %}
+                <div style="font-size:36px;">
+                    <label for="id_username">账号 </label>
+                    <input style="font-size:36px;" type="text" name="username" id="id_username" >
+                </div>
+                <div style="font-size:36px; position: relative; top: 24px;">
+                    <label for="id_password">密码 </label>
+                    <input style="font-size:36px;" type="password" name="password" id="id_password">
+                </div>
+                <input style="font-size:36px; position: relative; top: 48px; width: 530px;" type="submit" value="登录">
+            </form>
+            </div>
+        </div>
+    </body>
+</html>
