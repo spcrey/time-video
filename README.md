@@ -4,10 +4,7 @@ figma: https://www.figma.com/file/eDxVneOnBmgCOffsoOjSZ6/%E6%97%B6%E5%85%89%E8%A
 
 ## Web
 
-<video width="320" height="240" controls>
-  <source src="emo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+https://big-event-spcrey.oss-cn-beijing.aliyuncs.com/demo.mp4
 
 
 
