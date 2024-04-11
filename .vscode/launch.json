@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "manage run",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "manage.py",
+            "console": "integratedTerminal",
+            "justMyCode": true, 
+            "args": [
+                "runserver", "0.0.0.0:8000",
+            ],
+        },
+    ]
+}
