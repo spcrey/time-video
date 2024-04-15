@@ -180,8 +180,7 @@
         #text_login {
 			position: absolute;
 			height: 72px;
-			width: 72px;
-			left: 1578px;
+			right: 136px;
 			top: 36px;
 			font-size:36px;
 			text-align: center; 
@@ -257,6 +256,7 @@
 			top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
+			
 		}
         #select_resolution {
 			position: absolute;
@@ -286,18 +286,28 @@
             text-decoration: none;
             color: #4A4343;
         }
-		.custom-file-upload {
-			font-size: 36px;
-			display: inline-block;
-			padding: 12px 24px;
-			cursor: pointer;
-			background-color: #ed6b50;
-			border-radius: 5px;
-			color: #FFFFFF;
-		}
-		.custom-file-upload input[type=file] {
+
+		.custom-file-input::-webkit-file-upload-button {
 			display: none;
+			border: 0px; 	
 		}
+
+		.custom-file-input{	
+			width: 240px;
+			background-color: #ed6b50; 
+			color: #FFFFFF;	
+			border: 0px; 	
+			border-radius: 12px;	
+			padding-top: 24px; 
+			padding-right: 36px;
+			padding-bottom: 24px;
+			padding-left: 36px;
+			margin: 0;
+			font-size: 36px;
+			text-align: center;	
+        }
+		
+		
         </style>
 	</head>
 	<body>
@@ -308,7 +318,11 @@
                     时光视频
                 </div>
                 <div id="text_login">
-                    <a class="link_area_menu_left" href="{% url 'videos:user_login' %}">登录</a>
+					{% if is_authenticated %}
+                    	{{username}}，<a class="link_area_menu_left" href="{% url 'videos:user_logout' %}"><span style="color:#4a2bdb">退出</span></a>
+					{% else %}
+						<a class="link_area_menu_left" href="{% url 'videos:user_login' %}">登录</a>
+					{% endif %}
                 </div>
                 <div id="icon_login"> </div>
             </div>
@@ -342,10 +356,7 @@
                 <div id="area_file">
                     {% csrf_token %}
                     <div id="text_file">
-						<!-- <label label for="id_file" class="custom-file-upload" id="file-label"> -->
-							<!-- 上传视频 -->
-							{{ form.as_p }}
-						<!-- </label> -->
+						{{ form.file }} 
                     </div>
                 </div>
                 <div id="area_resolution">
@@ -372,16 +383,6 @@
             </form>
         </div>
 		<script>	
-			const fileInput = document.getElementById("id_file");
-			const fileLabel = document.getElementById("file-label");
-		
-			fileInput.addEventListener("change", function() {
-				if (fileInput.files.length > 0) {
-					fileLabel.textContent = fileInput.files[0].name;
-				} else {
-					
-				}
-			});
 		</script>
     </body>
 </html>

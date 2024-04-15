@@ -17,4 +17,6 @@ class DoubleVideo(models.Model):
 
     # high resolution video path
     hr_video_path = models.CharField(max_length=150)
+
+    img_path = models.CharField(max_length=150)
     

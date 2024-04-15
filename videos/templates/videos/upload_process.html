@@ -250,8 +250,7 @@
         #text_login {
 			position: absolute;
 			height: 72px;
-			width: 72px;
-			left: 1578px;
+			right: 136px;
 			top: 36px;
 			font-size:36px;
 			text-align: center; 
@@ -448,7 +447,11 @@
                     时光视频
                 </div>
                 <div id="text_login">
-                    <a class="link_area_menu_left" href="{% url 'videos:user_login' %}">登录</a>
+                    {% if is_authenticated %}
+                    	{{username}}，<a class="link_area_menu_left" href="{% url 'videos:user_logout' %}"><span style="color:#4a2bdb">退出</span></a>
+					{% else %}
+						<a class="link_area_menu_left" href="{% url 'videos:user_login' %}">登录</a>
+					{% endif %}
                 </div>
                 <div id="icon_login"> </div>
             </div>
@@ -495,28 +498,18 @@
 
                     </div>
                     <div id="text_complete">
-                        处理完成，<a href="{% url 'videos:playing' %}">进入下载界面</a>
+                        暂无任务，<a href="{% url 'videos:detail' lastest_id %}">查看最新记录</a>
                     </div>
-                    
+                {% endif %}
+				{% if status == "not login" %}
+                    <div id="area_progress_bar_from_complete">
+
+                    </div>
+                    <div id="text_complete">
+                        请先登录 ...
+                    </div>
                 {% endif %}
             </div>
         </div>
     </body>
 </html>
-
-
-
-
-
-<!-- <h2> page of upload process </h2>
-
-status: {{ status }}
-
-<ul>
-    <li><a href="{% url 'videos:upload' %}">upload</a></li>
-    <li><a href="{% url 'videos:upload_process' %}">upload_process</a></li>
-    <li><a href="{% url 'videos:collection' %}">collection</a></li>
-    <li><a href="{% url 'videos:history' %}">history</a></li>
-    <li><a href="{% url 'videos:playing' %}">playing</a></li>
-    <li><a href="{% url 'videos:user_login' %}">user_login</a></li>
-</ul> -->

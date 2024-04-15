@@ -53,7 +53,6 @@
 			left: 36px;
 			top: 36px;
 			border-radius: 12px;
-			background-image: url( {% static "videos/images/video_cover.png" %} );
 		}
 		#area_movie_2 {
 			border: 6px solid #A5A3AE;
@@ -63,7 +62,6 @@
 			left: 495px;
 			top: 36px;
 			border-radius: 12px;
-			background-image: url( {% static "videos/images/video_cover.png" %} );
 		}
 		#area_movie_3 {
 			border: 6px solid #A5A3AE;
@@ -73,7 +71,6 @@
 			left: 954px;
 			top: 36px;
 			border-radius: 12px;
-			background-image: url( {% static "videos/images/video_cover.png" %} );
 		}
 		#area_movie_4 {
 			border: 6px solid #A5A3AE;
@@ -83,7 +80,6 @@
 			left: 36px;
 			top: 324px;
 			border-radius: 12px;
-			background-image: url( {% static "videos/images/video_cover.png" %} );
 		}
 		#area_movie_5 {
 			border: 6px solid #A5A3AE;
@@ -93,7 +89,6 @@
 			left: 495px;
 			top: 324px;
 			border-radius: 12px;
-			background-image: url( {% static "videos/images/video_cover.png" %} );
 		}
 		#area_movie_6 {
 			border: 6px solid #A5A3AE;
@@ -103,7 +98,6 @@
 			left: 954px;
 			top: 324px;
 			border-radius: 12px;
-			background-image: url( {% static "videos/images/video_cover.png" %} );
 		}
         #area_gennerate {
 			position: absolute;
@@ -231,8 +225,7 @@
         #text_login {
 			position: absolute;
 			height: 72px;
-			width: 72px;
-			left: 1578px;
+			right: 136px;
 			top: 36px;
 			font-size:36px;
 			text-align: center; 
@@ -417,7 +410,11 @@
                     时光视频
                 </div>
                 <div id="text_login">
-                    <a class="link_area_menu_left" href="{% url 'videos:user_login' %}">登录</a>
+                    {% if is_authenticated %}
+                    	{{username}}，<a class="link_area_menu_left" href="{% url 'videos:user_logout' %}"><span style="color:#4a2bdb">退出</span></a>
+					{% else %}
+						<a class="link_area_menu_left" href="{% url 'videos:user_login' %}">登录</a>
+					{% endif %}
                 </div>
                 <div id="icon_login"> </div>
             </div>
@@ -452,31 +449,31 @@
                 {% if user_double_video_list %}
                     {% for video in user_double_video_list %}
                         {% if forloop.counter == 1 %}
-							<div id="area_movie_1">
+							<div id="area_movie_1" style="background-image: url('{{ video.img_path }}');">
 
 							</div>
 							<div id="text_movie_1">
-								<a class="link_area_menu_center" href="/videos/detail/{{ video.id }}/"> {{ video.hr_video_name }} </a>
+								<a class="link_area_menu_center" href="/videos/detail/{{ video.id }}/"> {{ video.name }} </a>
 							</div>
                         {% endif %} 
 						{% if forloop.counter == 2 %}
-							<div id="area_movie_2">
+							<div id="area_movie_2" style="background-image: url('{{ video.img_path }}');">
 
 							</div>
 							<div id="text_movie_2">
-								<a class="link_area_menu_center" href="/videos/detail/{{ video.id }}/"> {{ video.hr_video_name }} </a>
+								<a class="link_area_menu_center" href="/videos/detail/{{ video.id }}/"> {{ video.name }} </a>
 							</div>
                         {% endif %}
 						{% if forloop.counter == 3 %}
-							<div id="area_movie_3">
+							<div id="area_movie_3" style="background-image: url('{{ video.img_path }}');">
 
 							</div>
 							<div id="text_movie_3">
-								<a class="link_area_menu_center" href="/videos/detail/{{ video.id }}/"> {{ video.hr_video_name }} </a>
+								<a class="link_area_menu_center" href="/videos/detail/{{ video.id }}/"> {{ video.name }} </a>
 							</div>
                         {% endif %}
 						{% if forloop.counter == 4 %}
-							<div id="area_movie_4">
+							<div id="area_movie_4" style="background-image: url('{{ video.img_path }}');">
 
 							</div>
 							<div id="text_movie_4">
@@ -484,7 +481,7 @@
 							</div>
                         {% endif %}
 						{% if forloop.counter == 5 %}
-							<div id="area_movie_5">
+							<div id="area_movie_5" style="background-image: url('{{ video.img_path }}');">
 
 							</div>
 							<div id="text_movie_5">
@@ -492,7 +489,7 @@
 							</div>
                         {% endif %}
 						{% if forloop.counter == 6 %}
-							<div id="area_movie_6">
+							<div id="area_movie_6" style="background-image: url('{{ video.img_path }}');">
 
 							</div>
 							<div id="text_movie_6">
@@ -507,46 +504,3 @@
         </div>
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-<!-- {% if user_double_video_list %}
-    <ul>
-    {% for video in user_double_video_list %}
-        <li><a href="/videos/{{ video.id }}/">{{ video.hr_video_name }}, {{video.upload_time}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No history videos are available.</p>
-{% endif %} -->
-
-
-
-<!-- <h2> page of collection </h2>
-
-{% if user_double_video_list %}
-    <ul>
-    {% for video in user_double_video_list %}
-    <li><a href="/videos/{{ video.id }}/">{{ video.hr_video_name }}, {{video.upload_time}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No collection videos are available.</p>
-{% endif %}
-
-<ul>
-    <li><a href="{% url 'videos:upload' %}">upload</a></li>
-    <li><a href="{% url 'videos:upload_process' %}">upload_process</a></li>
-    <li><a href="{% url 'videos:collection' %}">collection</a></li>
-    <li><a href="{% url 'videos:history' %}">history</a></li>
-    <li><a href="{% url 'videos:playing' %}">playing</a></li>
-    <li><a href="{% url 'videos:user_login' %}">user_login</a></li>
-</ul> -->
