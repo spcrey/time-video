@@ -1,5 +1,5 @@
 {
     "python.analysis.extraPaths": [
-        "./RealBasicVSR-master",
+        "RealBasicVSR-master",
     ],
 }

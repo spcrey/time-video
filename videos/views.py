@@ -1,19 +1,22 @@
 import json
-import uuid
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse, Http404 
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
-from django.utils import timezone
-from django.contrib.auth.decorators import login_required
-from functools import wraps
-
 import os
 import multiprocessing
+from functools import wraps
+import uuid
 
-from .forms import UploadVideoForm
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, FileResponse, Http404 
+from django.shortcuts import render
+from django.urls import reverse
+from django.utils import timezone
+
+from .forms import VideoUploadForm
 from .models import DoubleVideo
+
+# Create your views here.
+
+with open(os.path.join('videos', 'image_paths.json')) as file:
+    image_paths = json.load(file)['image_paths']
 
 def custom_login_required(view_func):
     @wraps(view_func)
@@ -23,172 +26,164 @@ def custom_login_required(view_func):
         return view_func(request, *args, **kwargs)
     return wrapper
 
-with open(os.path.join("videos", "img_paths.json")) as file:
-    img_paths = json.load(file)["img_paths"]
+# url: http://localhost:8000/videos/
+def index(request):
+    return HttpResponseRedirect(reverse('videos:upload'))
 
-# Create your views here.
+def create_double_video_by_uploading_file(request, uploading_file):
+    image_id = len(DoubleVideo.objects.filter(create_user_id=request.user.id).order_by('-upload_time')) % len(image_paths)
+    double_video = DoubleVideo()
+    shotname, extension = os.path.splitext(uploading_file.name)
+    double_video.name = shotname
+    double_video.upload_time = timezone.now()
+    double_video.create_user_id = request.user.id
+    double_video.lr_video_path = os.path.join('video_files', f'{uuid.uuid4()}{extension}')
+    double_video.hr_video_path = os.path.join('video_files', f'{uuid.uuid4()}{extension}')
+    double_video.image_path = image_paths[image_id]
+    double_video.save()
+    return double_video
 
 @custom_login_required
-def set_collection(request, video_id, is_collection):
+def upload_post(request):
+    latest_double_video = DoubleVideo.objects.order_by('-upload_time').filter(create_user_id=request.user.id).first()
+    if latest_double_video and not latest_double_video.is_complete:
+        return render(request, 'videos/upload_failure.html')
+
+    form = VideoUploadForm(request.POST, request.FILES)
+    if form.is_valid():
+        uploading_file = request.FILES.getlist('file')[0]
+        double_video = create_double_video_by_uploading_file(request, uploading_file)
+        os.makedirs('video_files', exist_ok=True)
+        destination = open(double_video.lr_video_path, 'wb+')
+        for chunk in uploading_file.chunks():
+            destination.write(chunk)
+        destination.close()
+        # create video upload process, new multiprocessing
+        multiprocess = multiprocessing.Process(target=video_handling, args=(double_video, ))
+        multiprocess.start()
+        return HttpResponseRedirect(reverse('videos:upload_process'))
+    else:
+        return render(request, 'videos/upload_failure.html')
+
+# url: http://localhost:8000/videos/upload/
+def upload(request):
+    if request.method == 'POST':
+        return upload_post(request)
+    else:
+        form = VideoUploadForm()
+        username = request.user.username.upper() if request.user.is_authenticated else None
+        return render(request, 'videos/upload.html', {'form': form, 'username': username})
+    
+# video upload handling
+def video_handling(dv_file_model):
+    input_dir = dv_file_model.lr_video_path
+    output_dir = dv_file_model.hr_video_path
+    instruction = f'python RealBasicVSR-master/inference_realbasicvsr.py --input_dir={input_dir} --output_dir={output_dir} > /dev/null 2>&1'
+    os.system(instruction)
+    dv_file_model.is_complete = True
+    dv_file_model.save()
+
+# url: http://localhost:8000/videos/collection/
+@custom_login_required
+def collection(request):
+    double_video_list = DoubleVideo.objects.filter(create_user_id=request.user.id, is_complete=True, is_collection=True).order_by('-upload_time')
+    username = request.user.username.upper()
+    context = {
+        'double_video_list': double_video_list,
+        'username': username
+    }
+    return render(request, 'videos/collection.html', context)
+
+def set_collection(video_id, is_collection):
     file_model = DoubleVideo.objects.get(pk=video_id)
     file_model.is_collection = is_collection
     file_model.save()
     return HttpResponseRedirect(reverse('videos:detail', kwargs={'video_id': video_id}))
 
-# @login_required
-def add_collection(request, video_id):
-    return set_collection(request, video_id, True)
-
-def del_collection(request, video_id):
-    return set_collection(request, video_id, False)
-
-# url: http://localhost:8000/videos
-def index(request):
-    return HttpResponseRedirect(reverse('videos:upload'))
-
-# url: http://localhost:8000/videos/playing
+# url: http://localhost:8000/videos/add_collection/
 @custom_login_required
-def playing(request):
-    return render(request, 'videos/playing.html')
+def add_collection(request, video_id):
+    return set_collection(video_id, True)
 
-# url: http://localhost:8000/videos/history
+# url: http://localhost:8000/videos/del_collection/
+@custom_login_required
+def del_collection(request, video_id):
+    return set_collection(video_id, False)
+
+# url: http://localhost:8000/videos/history/
 @custom_login_required
 def history(request):
-    user_double_video_list = DoubleVideo.objects.order_by('-upload_time').filter(user_id=request.user.id)
+    double_video_list = DoubleVideo.objects.filter(create_user_id=request.user.id, is_complete=True).order_by('-upload_time')
     username = request.user.username.upper()
-
     context = {
-        'user_double_video_list': user_double_video_list,
-        "is_authenticated": True, "username": username,
+        'double_video_list': double_video_list,
+        'username': username,
     }
     return render(request, 'videos/history.html', context)
 
-# url: http://localhost:8000/videos/collection
-@custom_login_required
-def collection(request):
-    collection_user_double_video_list = DoubleVideo.objects.order_by('-upload_time').filter(user_id=request.user.id, is_collection=True)
-    username = request.user.username.upper()
-    context = {
-        'user_double_video_list': collection_user_double_video_list,
-        "is_authenticated": True, "username": username
-    }
-    return render(request, 'videos/collection.html', context)
-
-@custom_login_required
-def detail(request, video_id):
-    try:
-        file_model = DoubleVideo.objects.get(pk=video_id)
-        if request.user.is_authenticated:
-            user_id = request.user.id
-            if not user_id == file_model.user_id:
-                raise Http404('not your video')
-    except DoubleVideo.DoesNotExist:
-        raise Http404('video does not exist')
-    return render(request, 'videos/playing.html', context={
-        "video_id": video_id, "no_collection": not file_model.is_collection
-    }) 
-
-# video upload handling
-def upload_handling(request, file_model):
-    input_dir = file_model.lr_video_path
-    output_dir = file_model.hr_video_path
-    instruction = f'python RealBasicVSR-master/inference_realbasicvsr.py --input_dir={input_dir} --output_dir={output_dir} > /dev/null 2>&1'
-    os.system(instruction)
-    request.user.first_name = "complete"
-    request.user.save()
-    
-def download(request, video_id):
-    try:
-        file_model = DoubleVideo.objects.get(pk=video_id)
-        if request.user.is_authenticated:
-            user_id = request.user.id
-            if not user_id == file_model.user_id:
-                raise Http404('not your video')
-    except DoubleVideo.DoesNotExist:
-        raise Http404('video does not exist')
-    double_video = DoubleVideo.objects.get(id=video_id)
-    file = open(double_video.hr_video_path, 'rb')
-    response = FileResponse(file, content_type='vedeo/mp4')  
-    return response 
-
-# url: http://localhost:8000/videos/upload_process
+# url: http://localhost:8000/videos/upload_process/
 @custom_login_required
 def upload_process(request):
+    latest_double_video = DoubleVideo.objects.filter(create_user_id=request.user.id).order_by('-upload_time').first()
     username = request.user.username.upper()
-    if request.user.first_name == "video handling":
-        return render(request, 'videos/upload_process.html', {
-            'status': 'incomplete', "is_authenticated": True, "username": username
-        })
+    if latest_double_video:
+        print(latest_double_video)
+        if latest_double_video.is_complete:
+            return render(request, 'videos/upload_process.html', {
+                'status': 'complete', 'username': username, 'lastest_double_video_id': latest_double_video.pk,
+            })
+        else:
+            return render(request, 'videos/upload_process.html', {
+                'status': 'incomplete', 'username': username,
+            })
     else:
-        file_model = DoubleVideo.objects.filter(user_id=request.user.id).last() 
         return render(request, 'videos/upload_process.html', {
-            'status': 'complete', "lastest_id": file_model.pk, 
-            "is_authenticated": True, "username": username
+            'status': 'no video', 'username': username,
         })
 
 @custom_login_required
-def upload_post(request):
-    if request.user.first_name == "video handling":
-        return render(request, 'videos/upload_failure.html')
+# url: http://localhost:8000/videos/detail/
+def detail(request, video_id):
+    try:
+        double_video = DoubleVideo.objects.get(pk=video_id)
+        if not request.user.id == double_video.create_user_id:
+            raise Http404('not your video')
+    except DoubleVideo.DoesNotExist:
+        raise Http404('video does not exist')
+    return render(request, 'videos/detail.html', context={
+        'video_id': video_id, 'video_name': double_video.name, 'is_collection': double_video.is_collection
+    }) 
 
-    form = UploadVideoForm(request.POST, request.FILES)
+# url: http://localhost:8000/videos/download/
+@custom_login_required    
+def download(request, video_id):
+    try:
+        double_video = DoubleVideo.objects.get(pk=video_id)
+        if not request.user.id == double_video.create_user_id:
+            raise Http404('not your video')
+        double_video = DoubleVideo.objects.get(id=video_id)
+        file = open(double_video.hr_video_path, 'rb')
+        response = FileResponse(file, content_type='video2/mp4')  
+        return response 
+    except DoubleVideo.DoesNotExist:
+        raise Http404('video does not exist')
 
-    if form.is_valid():
-        if len(DoubleVideo.objects.filter(user_id=request.user.id)) == 0:
-            id = 1
-        else:
-            id = DoubleVideo.objects.filter(user_id=request.user.id).last().pk + 1
-        files = request.FILES.getlist('file')
-        file = files[0]
-        file_model = DoubleVideo()
-        shotname, extension = os.path.splitext(file.name)
-        file_model.name = shotname
-        file_model.lr_video_path = os.path.join('video_files', f'{uuid.uuid4()}{extension}')
-        file_model.upload_time = timezone.now()
-        file_model.user_id = request.user.id
-        file_model.hr_video_path = os.path.join('video_files', f'{uuid.uuid4()}{extension}')
-        file_model.img_path = img_paths[int(id%6)]
-        file_model.save()
-        destination = open(file_model.lr_video_path, 'wb+')
-        for chunk in file.chunks():
-            destination.write(chunk)
-        destination.close()
-
-        # create video upload process, new multiprocessing
-        multiprocess = multiprocessing.Process(target=upload_handling, args=(request, file_model, ))
-        multiprocess.start()
-        request.user.first_name = "video handling"
-        request.user.save()
-        return HttpResponseRedirect(reverse('videos:upload_process'))
-
-    else:
-        return render(request, 'videos/upload_failure.html')
-
-# url: http://localhost:8000/videos/upload
-def upload(request):
-    if request.method == 'POST':
-        return upload_post(request)
-    else:
-        form = UploadVideoForm()
-        is_authenticated = request.user.is_authenticated
-        username = request.user.username.upper() if is_authenticated else None
-        return render(request, 'videos/upload.html', {"form": form, "is_authenticated": request.user.is_authenticated, "username": username})
-
-# url: http://localhost:8000/videos/user_login
+# url: http://localhost:8000/videos/user_login/
 def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user:
             login(request, user)
             return HttpResponseRedirect(reverse('videos:upload'))
         else:
             return render(request, 'videos/user_login_failure.html')
+    else:
+        return render(request, 'videos/user_login.html') 
 
-    return render(request, 'videos/user_login.html') 
-
-# url: http://localhost:8000/videos/user_login
+# url: http://localhost:8000/videos/user_login/
+@custom_login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('videos:upload'))

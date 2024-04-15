@@ -7,16 +7,12 @@ from django.contrib.auth.models import AbstractUser
 
 class DoubleVideo(models.Model):
 
-    user_id = models.IntegerField(default=0)
+    name = models.CharField(max_length=50)
+    create_user_id = models.IntegerField()
     upload_time = models.DateTimeField('uploading time')
     is_collection = models.BooleanField(default=False)
-    name = models.CharField(max_length=50)
-
-    # low resolution video path
+    is_complete = models.BooleanField(default=False)
     lr_video_path = models.CharField(max_length=150)
-
-    # high resolution video path
     hr_video_path = models.CharField(max_length=150)
-
-    img_path = models.CharField(max_length=150)
+    image_path = models.CharField(max_length=150)
     
