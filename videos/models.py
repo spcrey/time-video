@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractUser
 # model: DoubleVideo, including two kinds of videos, LR and HR
 
 class DoubleVideo(models.Model):
-
     name = models.CharField(max_length=50)
     create_user_id = models.IntegerField()
     upload_time = models.DateTimeField('uploading time')
