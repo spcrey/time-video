@@ -1,0 +1,24 @@
+{% extends 'videos/base.html' %}
+{% block header %}
+{% endblock %}
+{% block aside %}
+{% endblock %}
+{% block main %}
+    <main>
+        <div id="area_login">
+        <div style="font-size:36px; position: absolute;  top: 36px; left: 250px;"> 请登录 </div>
+        <form action="" method="post" style="position: absolute;  top: 100px; left: 48px;;">
+            {% csrf_token %}
+            <div style="font-size:36px;">
+                <label for="id_username"> 账号 </label>
+                <input style="font-size:36px;" type="text" name="username" id="id_username" >
+            </div>
+            <div style="font-size:36px; position: relative; top: 24px;">
+                <label for="id_password"> 密码 </label>
+                <input style="font-size:36px;" type="password" name="password" id="id_password">
+            </div>
+            <input style="font-size:36px; position: relative; top: 48px; width: 530px;" type="submit" value="登录">
+        </form>
+        </div>
+    </main>
+{% endblock %}

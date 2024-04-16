@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <link rel='stylesheet' type='text/css' href='{% static 'videos/style.css' %}'>
+    </head>
+    <body>
+        {% block header %}
+        <header class="area">
+            <div id='logo'>
+                <div class='icon'></div>
+                <p>时光视频</p>
+            </div>
+            <div id="login">
+                <div class='icon'></div>
+                {% if username %}
+                    <a href='{% url 'videos:user_logout' %}'>{{username}}，退出</a>
+                {% else %}
+                    <a href='{% url 'videos:user_login' %}'>登录</a>
+                {% endif %}
+            </div>
+        </header>
+        {% endblock %}
+        {% block aside %}
+        <aside class="area">
+            {% block upload %}
+                <div id='upload'>
+                    <div class='icon'></div>
+                    <a href='{% url 'videos:upload' %}'>上传</a>
+                </div>
+            {% endblock %}
+            {% block collection %}
+                <div id='collection'>
+                    <div class='icon'></div>
+                    <a href='{% url 'videos:collection' %}'>收藏</a>
+                </div>
+            {% endblock %}
+            {% block history %}
+                <div id='history'>
+                    <div class='icon'></div>
+                    <a href='{% url 'videos:history' %}'><p>历史</p></a>
+                </div>
+            {% endblock %}
+            {% block process %}
+                <div id='process'>
+                    <div class='icon'></div>
+                    <a href='{% url 'videos:process' %}'><p>进度</p></a>
+                </div>
+            {% endblock %}
+        </aside>
+        {% endblock %}
+        {% block main %}
+        <main class="area">
+        </main>
+        {% endblock %}
+    </body>
+    <script>	
+    </script>
+</html>

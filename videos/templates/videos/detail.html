@@ -1,0 +1,10 @@
+<h2> detail page of video "{{video_name}}" </h2>
+<ul>
+    {% if is_collection %}
+        <li>已收藏，<a href="{% url 'videos:del_collection' video_id %}">移除</a></li>   
+    {% else %}
+        <li><a href="{% url 'videos:add_collection' video_id %}">添加收藏</a></li>
+    {% endif %}
+    <li><a href="{% url 'videos:download' video_id %}">点击下载</a></li>
+    <li><a href="{% url 'videos:upload' %}">返回主页</a></li>
+</ul>

@@ -1,0 +1,26 @@
+{% extends 'videos/base.html' %}
+
+{% block process %}
+    <div id='process' class='select'>
+        <div class='icon select'></div>
+        <a href='{% url 'videos:process' %}'>进度</a>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <main class="area">
+        <div id="progress_bar" class="area">
+            <div class="{{status}} area"></div>
+        </div>
+
+        {% if status == "incomplete" %}
+            <p class="progress_test">正在处理请稍后 ...</p>
+        {% endif %}
+        {% if status == "complete" %}
+            <a class="progress_test" href="{% url 'videos:detail' lastest_double_video_id %}">处理完成，查看最新记录</a>
+        {% endif %}
+        {% if status == "no_video" %}
+            <p class="progress_test">暂无任务</p>
+        {% endif %}
+    </main>
+{% endblock %}

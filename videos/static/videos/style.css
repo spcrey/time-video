@@ -1,0 +1,328 @@
+* {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+p, a, select, input, .custom-file-input {
+    font-size: 36px;
+    line-height: 72px;
+    font-family: 'Microsoft Yahei';
+    color: #4A4343;
+    text-align: center; 
+}
+a { 
+    text-decoration: none;
+}
+body {
+    zoom: 1;
+    left: 0px;
+    top: 0px;
+    width:  1920px;
+    height: 1080px;
+    background-image: url('images/background.jpg');
+}
+.area {
+    border-radius: 12px;
+}
+.icon {
+    width: 72px;
+    height: 72px;
+}
+header {
+    left: 72px;
+    top: 72px;
+    width: 1776px;
+    height: 132px;
+    background-color: #FFFFFF;
+}
+#logo {
+    left: 36px;
+    top: 36px;
+    height: 72px;
+    width: 100%;
+}
+#logo .icon{
+    background-image: url('icons/icon_time_video.png');
+}
+#logo p {
+    left: 90px;
+}
+#login {
+    right: 36px;
+    top: 36px;
+    height: 72px;
+    width: 100%;
+}
+#login .icon {
+    right: 0;
+    background-image: url('icons/icon_login.png');
+}
+#login a {
+    right: 90px;
+}
+aside {
+    left: 72px;
+    top: 288px;
+    height: 720px;
+    width: 288px;
+    background-color: #FFFFFF;
+}
+aside div {
+    left: 27px;
+    width: 234px;
+    height: 90px;
+    border-radius: 12px;
+}
+.area_select {
+    background-color: #4a2bdb;
+}
+.area_select {
+    background-color: #4a2bdb;
+}
+aside .select {
+    background-color: #4a2bdb;
+}
+#upload .icon-select {
+    background-image: url('icons/icon_upload_white.png');
+}
+aside .select a {
+    color: #FFFFFF;
+}
+#upload {
+    top: 27px;
+} 
+#collection {
+    top: 135px;
+}   
+#history {
+    top: 243px;
+}
+#process {
+    top: 351px;
+}
+aside div .icon{
+    top: 12px;
+    left: 12px;
+}
+#upload .icon {
+    background-image: url('icons/icon_upload_blue.png');
+}
+#upload .select {
+    background-image: url('icons/icon_upload_white.png');
+}
+#collection .icon {
+    background-image: url('icons/icon_collection_blue.png');
+}
+#collection .select {
+    background-image: url('icons/icon_collection_white.png');
+}
+#history .icon {
+    background-image: url('icons/icon_history_blue.png');
+}
+#history .select {
+    background-image: url('icons/icon_history_white.png');
+}
+#process .icon {
+    background-image: url('icons/icon_process_blue.png');   
+}
+#process .select {
+    background-image: url('icons/icon_process_white.png');
+}
+aside div a {
+    left: 99px;
+    top: 9px;
+    height: 72px;
+    width: 72px;
+}
+main {
+    left: 432px;
+    top: 288px;
+    height: 720px;
+    width: 1416px;
+    background-color: #FFFFFF;
+}
+form {
+    left: 0;
+    top: 0;
+}
+
+#file {
+    left: 36px;
+    top: 36px;
+    width: 1332px;
+    height: 432px;
+    border: 6px solid #A5A3AE;
+    background-color: #ECE9F6;
+}
+#file div {
+    border: 0;
+    top: 180px;
+    left: 546px;
+    width: 252px;
+    height: 72px;
+    background-color: #ed6b50; 
+}
+.custom-file-input{	
+    left: 36px;	
+    color: #FFFFFF;	
+    border-radius: 12px;
+    width: 188px;
+} 
+.custom-file-input::-webkit-file-upload-button {
+    display: none;
+}
+#resolution, #resolution select {
+    height: 72px;
+    background-color: #ECE9F6;
+}
+#resolution {
+    left: 36px;
+    top: 504px;
+    width: 423px;
+}
+#time, #time select {
+    height: 72px;
+    background-color: #ECE9F6;
+}
+#time {
+    left: 495px;
+    top: 504px;
+    width: 594px;
+}
+#resolution select, #time select {
+    left: 27px;
+    outline: none;
+}
+#gennerate {
+    left: 1125px;
+    top: 504px;
+    width: 255px;
+    height: 72px;
+    background-color: #4A2BDB;
+}
+#gennerate input {
+    left: 90px;
+    top: 0px;
+    width: 80px;
+    height: 72px;
+    color: #FFFFFF;
+    background-color: #4A2BDB;
+}
+#progress_bar {
+    left: 72px;
+    top: 144px;
+    width: 1272px;
+    height: 72px;
+    background-color: #ECE9F6;
+}
+#progress_bar .complete {
+    width: 100%;
+    height: 100%;
+    background-color: #4A2BDB;
+}
+#progress_bar .incomplete {
+    width: 50%;
+    height: 100%;
+    background-color: #4A2BDB;
+}
+#progress_bar .no_video {
+    width: 0;
+    height: 100%;
+    background-color: #4A2BDB;
+}
+.progress_test {
+    height: 72px;
+    width: 100%;
+    top: 270px;
+}
+.video {
+    height: 288px;
+    width: 423px;
+}
+#video_1 {
+    left: 36px;
+    top: 36px;
+}
+#video_2 {
+    left: 495px;
+    top: 36px;
+}
+#video_3 {
+    left: 954px;
+    top: 36px;
+}
+#video_4 {
+    left: 36px;
+    top: 333px;
+}
+#video_5 {
+    left: 495px;
+    top: 333px;
+}
+#video_6 {
+    left: 954px;
+    top: 333px;
+}
+.video div {
+    left: -6px;
+    top: -6px;
+    border: 6px solid #A5A3AE;
+    width: 423px;
+    height: 216px;
+}
+.video a {
+    top: 216px;
+    width: 423px;
+    height: 72px;
+}
+#login_table {
+    left: 645px;
+    top: 240px;
+    width: 630px;
+    height: 360px;
+}
+#login_table .title {
+    top: 36px;
+    width: 100%;
+    font-size: 36px;
+    line-height: 45px;
+}
+#login_table .username {
+    top: 108px;
+    left: 108px;
+    width: 412px;
+    height: 45px;
+}
+#login_table .password {
+    top: 180px;
+    left: 108px;
+    width: 412px;
+    height: 45px;
+}
+
+#login_table div p {
+    line-height: 45px;
+}
+
+#login_table div input {
+    left: 90px;
+    line-height: 45px;
+    width: 312px;
+    height: 94%;
+    border: 2px solid #4A4343;
+    text-align: left; 
+    font-size: 30px;
+    padding-left: 6px; 
+    border-radius: 6px;
+}
+
+#login_table .submit {
+    top: 252px; 
+    left: 108px;
+    width: 412px;
+    line-height: 45px;
+    color: #FFFFFF;
+    background-color: #4A2BDB;
+    border-radius: 6px;
+}

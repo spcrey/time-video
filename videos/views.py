@@ -30,6 +30,11 @@ def custom_login_required(view_func):
 def index(request):
     return HttpResponseRedirect(reverse('videos:upload'))
 
+# url: http://localhost:8000/videos/template/
+def template(request):
+    username = request.user.username.upper() if request.user.is_authenticated else None
+    return render(request, 'videos/base.html', {'username': username})
+
 def create_double_video_by_uploading_file(request, uploading_file):
     image_id = len(DoubleVideo.objects.filter(create_user_id=request.user.id).order_by('-upload_time')) % len(image_paths)
     double_video = DoubleVideo()
@@ -61,7 +66,7 @@ def upload_post(request):
         # create video upload process, new multiprocessing
         multiprocess = multiprocessing.Process(target=video_handling, args=(double_video, ))
         multiprocess.start()
-        return HttpResponseRedirect(reverse('videos:upload_process'))
+        return HttpResponseRedirect(reverse('videos:process'))
     else:
         return render(request, 'videos/upload_failure.html')
 
@@ -121,24 +126,24 @@ def history(request):
     }
     return render(request, 'videos/history.html', context)
 
-# url: http://localhost:8000/videos/upload_process/
+# url: http://localhost:8000/videos/process/
 @custom_login_required
-def upload_process(request):
+def process(request):
     latest_double_video = DoubleVideo.objects.filter(create_user_id=request.user.id).order_by('-upload_time').first()
     username = request.user.username.upper()
     if latest_double_video:
         print(latest_double_video)
         if latest_double_video.is_complete:
-            return render(request, 'videos/upload_process.html', {
+            return render(request, 'videos/process.html', {
                 'status': 'complete', 'username': username, 'lastest_double_video_id': latest_double_video.pk,
             })
         else:
-            return render(request, 'videos/upload_process.html', {
+            return render(request, 'videos/process.html', {
                 'status': 'incomplete', 'username': username,
             })
     else:
-        return render(request, 'videos/upload_process.html', {
-            'status': 'no video', 'username': username,
+        return render(request, 'videos/process.html', {
+            'status': 'no_video', 'username': username,
         })
 
 @custom_login_required
