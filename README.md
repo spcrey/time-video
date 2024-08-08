@@ -19,5 +19,7 @@ http://localhost:8000/videos/upload
 
 # Admin Acount
 username: admin
+
 password: timevideo
+
 web: http://localhost:8000/admin
