@@ -7,7 +7,7 @@ figma: https://www.figma.com/file/eDxVneOnBmgCOffsoOjSZ6/%E6%97%B6%E5%85%89%E8%A
 
 ### Web
 
-"demo.mp4"
+<video controls src="https://github.com/spcrey/time-video/blob/master/demo.mp4" title="demo.mp4"></video>
 
 ### Run
 ```sh
