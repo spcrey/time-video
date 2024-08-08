@@ -16,5 +16,3 @@ run bash.sh
 
 ### Home Page
 http://localhost:8000/videos/upload
-
-
