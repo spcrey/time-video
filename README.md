@@ -7,7 +7,7 @@ figma: https://www.figma.com/file/eDxVneOnBmgCOffsoOjSZ6/%E6%97%B6%E5%85%89%E8%A
 
 ### Web
 
-https://spcrey.oss-cn-beijing.aliyuncs.com/demo.mp4
+[![Video Title](https://img.youtube.com/vi/kzFXU_NS4t4/0.jpg)](https://www.youtube.com/watch?v=kzFXU_NS4t4)
 
 ### Run
 ```sh
