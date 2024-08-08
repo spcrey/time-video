@@ -84,6 +84,8 @@ def video_handling(dv_file_model):
     input_dir = dv_file_model.lr_video_path
     output_dir = dv_file_model.hr_video_path
     instruction = f'python RealBasicVSR-master/inference_realbasicvsr.py --input_dir={input_dir} --output_dir={output_dir} > /dev/null 2>&1'
+    instruction = f'python RealBasicVSR-master/inference_realbasicvsr.py --input_dir={input_dir} --output_dir={output_dir}'
+    instruction = f'python RealBasicVSR-master/text.py --input_dir={input_dir} --output_dir={output_dir}'
     os.system(instruction)
     dv_file_model.is_complete = True
     dv_file_model.save()

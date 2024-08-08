@@ -8,7 +8,7 @@ import numpy as np
 import torch
 # from mmcv.runner import load_checkpoint # 版本过时了
 from mmengine.runner import load_checkpoint
-from mmedit.core import tensor2img
+# from mmedit.core import tensor2img
 
 from realbasicvsr.models.builder import build_model
 
