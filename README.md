@@ -7,6 +7,7 @@ figma: https://www.figma.com/file/eDxVneOnBmgCOffsoOjSZ6/%E6%97%B6%E5%85%89%E8%A
 
 ### Web
 
+"display/display.mp4"
 [![Video Title](https://img.youtube.com/vi/dhPkKZBGMlM/0.jpg)](https://www.youtube.com/watch?v=dhPkKZBGMlM)
 
 ### Run
